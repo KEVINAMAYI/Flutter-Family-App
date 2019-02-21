@@ -1,32 +1,30 @@
-import 'package:custom_chewie/custom_chewie.dart';
+import 'package:chewie/chewie.dart';
+import 'package:chewie/src/chewie_player.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:my_family_app/main.dart';
 import 'package:video_player/video_player.dart';
+import 'package:my_family_app/main.dart';
 
-class MyVideoPage extends StatefulWidget{
+class MyVideoPage extends StatefulWidget {
+  MyVideoPage({this.title = 'Chewie Demo'});
+
+  final String title;
+
   @override
-  MyVideoPageState createState() {
-    return MyVideoPageState();
+  State<StatefulWidget> createState() {
+    return _MyVideoPageState();
   }
 }
 
-class MyVideoPageState extends State<MyVideoPage> {
-
-  TargetPlatform targetPlatform;
-  VideoPlayerController _controller;
-
-
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _controller=new VideoPlayerController.network("https://youtu.be/heku_-RWxLY");
-  }
+class _MyVideoPageState extends State<MyVideoPage> {
+  TargetPlatform _platform;
+  VideoPlayerController _videoPlayerController1;
+  ChewieController _chewieController;
+  var videourl="https://flutter.github.io/assets-for-api-docs/assets/videos/butterfly.mp4";
 
 
 
-Widget buildCard(String url){
+  Widget buildCard(String url){
   return  Card(
     elevation:8.0,
     margin:new EdgeInsets.symmetric(horizontal:10.0,vertical:5.0),
@@ -85,13 +83,28 @@ Widget buildCard(String url){
       ],
     ),
       trailing:
-            Icon(Icons.more_vert, color: Colors.white, size: 30.0),
-            onTap:(){
-              setState((){
-              _controller=new VideoPlayerController.network(url);
-              }
-              ); 
-            }),
+       Icon(Icons.more_vert, color: Colors.white, size: 30.0),
+        onTap:(){
+        setState((){
+        _videoPlayerController1 = VideoPlayerController.network(url);
+        _chewieController = ChewieController(
+        videoPlayerController: _videoPlayerController1,
+        aspectRatio: 3 / 2,
+        autoPlay: true,
+        looping: true,
+        materialProgressColors: ChewieProgressColors(
+        playedColor: Colors.red,
+        handleColor: Colors.blue,
+        backgroundColor: Colors.grey,
+        bufferedColor: Colors.lightGreen,
+      ),
+      placeholder: Container(
+        color: Colors.grey,
+      ),  
+    );
+
+     }); 
+       }),
   ),
     ); 
 
@@ -99,33 +112,63 @@ Widget buildCard(String url){
 
 }
 
+  @override
+  void initState() {
+    super.initState();
+        
+        _videoPlayerController1 = VideoPlayerController.network(videourl);
+        _chewieController = ChewieController(
+        videoPlayerController: _videoPlayerController1,
+        aspectRatio: 3 / 2,
+        autoPlay: true,
+        looping: true,
+        materialProgressColors: ChewieProgressColors(
+        playedColor: Colors.red,
+        handleColor: Colors.blue,
+        backgroundColor: Colors.grey,
+        bufferedColor: Colors.lightGreen,
+      ),
+      placeholder: Container(
+        color: Colors.grey,
+      ),  
+    );
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController1.dispose();
+    _chewieController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    
-    return Scaffold(
+    return MaterialApp(
+      title: widget.title,
+      theme: ThemeData.light().copyWith(
+        platform: _platform ?? Theme.of(context).platform,
+        ),
+        home:Scaffold(
       appBar:AppBar(
         backgroundColor:Color.fromRGBO(58,66,86,0.9),
         title:Text(
         'MyVideo Page'
       ),),
       drawer:MyDrawer(),
-      body:Column(
+        body:Column(
         children:<Widget>[
         Container(
         padding:EdgeInsets.all(10.0),     
-        child:new Chewie(
-        _controller,
-        aspectRatio:3/2,
-        looping:true
-        )
+        child:Chewie(
+                  controller: _chewieController,
+                 ),
       ),
       Expanded(
         child:Container(
         color:Colors.white,
         child:ListView(
         children: <Widget>[
-          buildCard("https://youtu.be/heku_-RWxLY"),
+          buildCard('http://dl.tehmovies.pro/94/series/macgyver/s3/Macgyver.S03E09.480p.WEB.RMT.mkv'),
           buildCard("https://youtu.be/heku_-RWxLY"),
           buildCard("https://youtu.be/heku_-RWxLY"),
           buildCard("https://youtu.be/heku_-RWxLY"),
@@ -137,7 +180,8 @@ Widget buildCard(String url){
       )
       ]
       ),
+      ),
+  
     );
-
   }
 }

@@ -25,8 +25,7 @@ dependencies:
   dio: any
   path_provider: any
   flutter_pdf_viewer: any
-  video_player: ^0.6.0
-  custom_chewie: ^0.7.0
+  chewie: ^0.9.5
  
  
 
