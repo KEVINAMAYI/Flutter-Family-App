@@ -169,12 +169,12 @@ class _MyVideoPageState extends State<MyVideoPage> {
         child:ListView(
         children: <Widget>[
           buildCard('http://dl.tehmovies.pro/94/series/macgyver/s3/Macgyver.S03E09.480p.WEB.RMT.mkv'),
-          buildCard("https://youtu.be/heku_-RWxLY"),
-          buildCard("https://youtu.be/heku_-RWxLY"),
-          buildCard("https://youtu.be/heku_-RWxLY"),
-          buildCard("https://youtu.be/heku_-RWxLY"),
-          buildCard("https://youtu.be/heku_-RWxLY"),
-          buildCard("https://youtu.be/heku_-RWxLY"),          
+          buildCard("http://dl.tehmovies.pro/94/series/macgyver/s3/Macgyver.S03E09.480p.WEB.RMT.mkv"),
+          buildCard("http://dl.tehmovies.pro/94/series/macgyver/s3/Macgyver.S03E09.480p.WEB.RMT.mkv"),
+          buildCard("http://dl.tehmovies.pro/94/series/macgyver/s3/Macgyver.S03E09.480p.WEB.RMT.mkv"),
+          buildCard("http://dl.tehmovies.pro/94/series/macgyver/s3/Macgyver.S03E09.480p.WEB.RMT.mkv"),
+          buildCard("http://dl.tehmovies.pro/94/series/macgyver/s3/Macgyver.S03E09.480p.WEB.RMT.mkv"),
+          buildCard("http://dl.tehmovies.pro/94/series/macgyver/s3/Macgyver.S03E09.480p.WEB.RMT.mkv"),          
         ],
       ))
       )
